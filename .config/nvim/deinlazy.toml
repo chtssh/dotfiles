@@ -1,0 +1,226 @@
+# Completions and snippets {{{
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_i = 1
+hook_source = '''
+  source ~/.config/nvim/plugins/deoplete.vim
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_source = 'source ~/.config/nvim/plugins/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+depends = 'deoplete.nvim'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'zchee/deoplete-clang'
+# rev = '298d15fb9e9bc575f67d35c66ba54c40aac6d08c'
+on_ft = ['c', 'cpp', 'h']
+hook_source = '''
+  let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+  let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+  let g:deoplete#sources#clang#sort_algo = 'priority'
+'''
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = ['vim', 'toml']
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+on_source = 'deoplete.nvim'
+ 
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_source = 'deoplete.nvim'
+hook_add = '''
+  let g:neoinclude#exts = {}
+  let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx', 'H']
+'''
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_source = 'deoplete.nvim'
+hook_add = '''
+  set noshowmode
+  " set cmdheight=2 " Increase comand bar.
+  set shortmess+=cF " Disable ins and file message
+  let g:echodoc_enable_at_startup = 1
+  set cpoptions-=m " Wait half a second or until a character is typed.
+'''
+
+#}}}
+
+# Unite {{{
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+hook_source = 'source ~/.config/nvim/plugins/unite.vim'
+hook_add = '''
+" File
+  nnoremap <silent> <Leader>f
+        \ :<C-u>Unite -start-insert file_rec/neovim<CR>
+
+" Tabs
+  nnoremap <silent> <Leader>t
+        \ :<C-u>Unite -auto-resize -select=`tabpagenr()-1` tab<CR>
+
+" Jump
+  nnoremap <silent> <Leader>k
+        \ :<C-u>Unite change jump<CR>
+
+" Grep
+  nnoremap <silent> <Leader>g
+        \ :<C-u>Unite grep -buffer-name=grep`tabpagenr()`
+        \ -auto-preview -no-split -no-empty -resume<CR>
+
+" Search
+  nnoremap <silent> /
+        \ :<C-u>Unite -buffer-name=search%`bufnr('%')`
+        \ -start-insert line:forward:wrap<CR>
+  nnoremap <silent> *
+        \ :<C-u>UniteWithCursorWord -buffer-name=search%`bufnr('%')`
+        \ line:forward:wrap<CR>
+
+" Buffer
+  nnoremap <silent> <Leader>b
+        \ :<C-u>Unite -auto-resize buffer<CR>
+  nnoremap <silent> <Leader>s
+        \ :<C-u>Unite -buffer-name=files -no-split -multi-line -unique -silent
+        \ jump_point file_point file_mru
+        \ `finddir('.git', ';') != '' ? 'file_rec/git' : ''`
+        \ buffer_tab:- file file/new<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+on_source = 'unite.vim'
+hook_add = 'nnoremap <silent> <Leader>v :<C-u>VimFiler -invisible<CR>'
+hook_source = 'source ~/.config/nvim/plugins/vimfiler.vim'
+
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <silent> <Leader>s
+        \ :<C-u>Unite -buffer-name=files -no-split -multi-line -unique -silent
+        \ jump_point file_point file_mru
+        \ `finddir('.git', ';') != '' ? 'file_rec/git' : ''`
+        \ buffer_tab:- file file/new<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <silent> <Leader>o
+        \ :<C-u>Unite outline -buffer-name=buffers -no-start-insert -resume -auto-resize -no-empty<CR>
+'''
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <silent><expr> <C-]> &filetype == 'help' ?  "<C-]>" :
+        \ ":<C-u>UniteWithCursorWord -buffer-name=tag -immediately
+        \ tag tag/include<CR>"
+'''
+
+[[plugins]]
+repo = 'Shougo/junkfile.vim'
+on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <silent> <Leader>e
+        \ :<C-u>Unite junkfile/new junkfile -start-insert<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_source = 'unite.vim'
+hook_add = '''
+  nnoremap <silent> <Leader>r
+        \ :<C-u>Unite -buffer-name=register
+        \ -default-action=append register history/yank<CR>
+'''
+
+#}}}
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
+on_map = [['n', '<Plug>']]
+hook_add = '''
+  nmap <silent>sa <Plug>(operator-surround-append)a
+  nmap <silent>sd <Plug>(operator-surround-delete)a
+  nmap <silent>sr <Plug>(operator-surround-replace)a
+'''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+on_map = [['n', '<Plug>']]
+hook_add = '''
+  let g:EasyMotion_do_mapping = 0 " Disable default mappings
+  let g:EasyMotion_show_prompt = 0
+  let g:EasyMotion_startofline = 0
+  let g:EasyMotion_verbose = 0
+  " f{char} to move to {char}
+  "nmap f <Plug>(easymotion-overwin-f)
+  " t{char}{char} to move to {char}{char}
+  "nmap t <Plug>(easymotion-overwin-f2)
+  nmap w <Plug>(easymotion-lineforward)
+  nmap W w
+  nmap b <Plug>(easymotion-linebackward)
+  nmap B b
+'''
+
+[[plugins]]
+repo = 'benekastah/neomake'
+on_ft = ['c', 'cpp', 'h', 'python']
+hook_add = 'source ~/.config/nvim/plugins/neomake.vim'
+
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+on_map = [['n', '<Plug>']]
+hook_add = '''
+  nmap <silent>j <Plug>(accelerated_jk_gj)
+  nmap <silent>k <Plug>(accelerated_jk_gk)
+'''
+
+[[plugins]]
+repo = 'saihoooooooo/glowshi-ft.vim'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+  let g:glowshi_ft_no_default_key_mappings = 1
+  nmap f <Plug>(glowshi-ft-f)
+  xmap f <Plug>(glowshi-ft-f)
+  nmap F <Plug>(glowshi-ft-F)
+  xmap F <Plug>(glowshi-ft-F)
+  let g:glowshi_ft_timeoutlen = 1000
+'''
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+on_map = [['nx', '<Plug>']]
+hook_add = '''
+  nmap gc  <Plug>(caw:prefix)
+  xmap gc  <Plug>(caw:prefix)
+  nmap gcc <Plug>(caw:hatpos:toggle)
+  xmap gcc <Plug>(caw:hatpos:toggle)
+'''
+
+[[plugins]]
+repo = 'Shougo/vinarise.vim'
+on_cmd = 'Vinarise'
+hook_add = 'let g:vinarise_enable_auto_detect = 1'

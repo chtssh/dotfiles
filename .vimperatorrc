@@ -1,0 +1,13 @@
+set runtimepath=~/.config/vimperator
+
+set gui=none,tabs
+set scrollbars=false
+
+let g:smooziee_scroll_amount="200"
+let g:smooziee_scroll_interval="40"
+
+set titlestring=
+" set complete=sb
+colorscheme gruvbox
+
+" vim: ft=vim
