@@ -20,5 +20,6 @@ export HISTFILE=~/.cache/mksh/histfile
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias screenshot='scrot -s ~/pictures/screenshots/%Y-%m-%d-%H%M%S.png'
 
 # vim: ft=sh
