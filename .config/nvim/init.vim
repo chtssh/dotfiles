@@ -37,6 +37,8 @@ endfunction
 nnoremap <silent> <Leader>l :call ToggleLocationList()<CR>
 nnoremap <silent> <Leader>q :call ToggleQuickfixList()<CR>
 nnoremap Q q
+nnoremap <Leader>h :e %<.h<CR>
+nnoremap <Leader>c :e %<.cpp<CR>
 
 xnoremap <Tab> >
 xnoremap <S-Tab> <
@@ -103,7 +105,7 @@ autocmd FileType toml syntax sync minlines=500
 
 " Edit: {{{
 " set textwidth=90                " Maximum width of text that is being inserted
-"set colorcolumn=+1,+2           " A comma separated list of screen columns
+" set colorcolumn=+1,+2           " A comma separated list of screen columns
 
 set noswapfile                  " Disable swap file
 set undofile                    " Enable undo file
