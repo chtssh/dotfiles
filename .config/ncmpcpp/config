@@ -33,13 +33,13 @@ volume_change_step = 5
 progressbar_look = ─▮
 progressbar_boldness = yes
 
-user_interface = classic
+# user_interface = alternative
 
 media_library_primary_tag = artist
 
 header_visibility = no
 statusbar_visibility = no
-# titles_visibility = no
+titles_visibility = no
 
 allow_for_physical_item_deletion = no
 
