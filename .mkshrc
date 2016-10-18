@@ -1,25 +1,45 @@
 ## Title: "mksh:~/foo/bar"
 ## Prompt: "127[bar] master $/# "
 PS1=$'\e];mksh:${PWD/#~/"~"}\a\e[31m${?#0}\e[m[$(basename "${PWD/#~/"~"}")]$(
-    if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-        local st=$(git status --porcelain)
+if [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ] ; then
+	local st=$(git status --porcelain)
+	if print "$st" | grep -qm 1 "^.[MD?]" ; then
+		print -n "\e[31m"
+	elif print "$st" | grep -qm 1 "^[MADRC]" ; then
+		print -n "\e[33m"
+	else
+		print -n "\e[32m"
+	fi
+	print " $(git symbolic-ref --short HEAD) "
+fi)$(
+(( USER_ID )) && print "\e[32m$" || print "\e[31m#") \e[m'
 
-        if grep -qm 1 "^.[MD?]" <<< $st; then
-            print -n "\e[31m"
-        elif grep -qm 1 "^[MARC]" <<< $st; then
-            print -n "\e[33m"
-        else
-            print -n "\e[32m"
-        fi
-        print " $(git symbolic-ref --short HEAD) \e[m"
-    fi)$(
-    (( USER_ID )) && print "\e[32m$" || print "\e[31m#") \e[m'
+export PATH="$PATH:$HOME/.bin"
+# export XAUTHORITY="$XDG_RUNTIME_DIR"/X11/xauthority
+# export ICEAUTHORITY="$XDG_RUNTIME_DIR"/X11/iceauthority
+export CUDA_CACHE_PATH="$HOME/.cache/nv"
+export GNUPGHOME="$HOME/.config/gnupg"
+# export GIMP2_DIRECTORY="$HOME/.config/gimp"
+export PASSWORD_STORE_DIR="$HOME/.cache/pass"
+export LESSHISTFILE="$HOME/.cache/less/history"
+export LESSKEY="$HOME/.config/less/lesskey"
+export HISTFILE="$HOME/.cache/mksh/history"
+export HISTSIZE=10000
+export EDITOR='nvim'
+export GREP_COLORS='ms=1:mc=1:sl=:cx=:fn=1;32:ln=1;35:bn=35:se=1;34:'
+export LS_COLORS='di=1:ln=36:pi=33:ex=32:or=31:mi=05;37;41:'\
+'*.mkv=35;1:*.webm=35;1:*.avi=35;1:*.jpg=35:*.JPG=35:*.jpe=35:*.png=35:'\
+'*.flac=35:*.wav=35:*.bak=34;1:*.old=34;1:'\
+'*.7z=31;1:*.bz=31;1:*bz.2=31;1:*.gz=31;1:*.rar=31;1:*.tar=31;1:*.zip=31;1'
+export BTPD_HOME="$HOME/.cache/btpd"
 
-export EDITOR=nvim
-export HISTFILE=~/.cache/mksh/histfile
-
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --group-directories-first'
 alias grep='grep --color=auto'
-alias screenshot='scrot -s ~/pictures/screenshots/%Y-%m-%d-%H%M%S.png'
+alias scrot='scrot -s ~/pictures/scrot/%Y-%m-%d-%H%M%S.png'
+alias gitdot='git --git-dir=~/repos/.dotfiles/ --work-tree=~/'
+alias ncmpc='ncmpc -f ~/.config/ncmpc/config -k ~/.config/ncmpc/keys'
+alias irssi='irssi --home=~/.config/irssi'
+
+bind -m '^[OQ=^A^[d^Y^[# man ^Y^M^P^[#^E'
 
 # vim: ft=sh
