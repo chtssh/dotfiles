@@ -1,0 +1,12 @@
+[Unit]
+Description=BitTorrent client daemon
+Documentation=man:btpd
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/btpd -d %h/.cache/btpd --no-daemon
+RestartSec=1min
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
