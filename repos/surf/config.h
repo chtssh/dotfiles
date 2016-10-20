@@ -83,7 +83,7 @@ static Bool allowgeolocation      = TRUE;
 #define BM_ADD { \
 	.v = (char *[]){ "/bin/sh", "-c", \
 		"(echo `xprop -id $0 _SURF_URI | cut -d '\"' -f 2` && \
-		cat ~/.config/surf/bookmarks) | sort -u > ~/.surf/bookmarks_new && \
+		cat ~/.config/surf/bookmarks) | sort -u > ~/.config/surf/bookmarks_new && \
 		mv ~/.config/surf/bookmarks_new ~/.config/surf/bookmarks", \
 		winid, NULL \
 	} \
