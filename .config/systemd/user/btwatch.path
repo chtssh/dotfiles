@@ -1,7 +1,5 @@
 [Unit]
 Description=Automatically add torrents from watch directory
-BindsTo=btpd.service
-After=btpd.service
 
 [Path]
 PathExistsGlob=%h/downloads/*.torrent

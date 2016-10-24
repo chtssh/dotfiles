@@ -1,8 +1,12 @@
 [Unit]
 Description=Automatically add torrents from watch directory
+After=btpd.service
+Requires=btpd.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/sh -c "btcli -d ~/.cache/btpd \
-	add -d ~/downloads -T ~/downloads/*.torrent"
+; ExecStartPre=/usr/bin/sh -c "inotifywait -e close ~/downloads/*.torrent"
+ExecStartPre=/usr/bin/sleep 10
+ExecStart=/usr/bin/sh -c \
+	"btcli -d ~/.cache/btpd add -d ~/downloads -T ~/downloads/*.torrent"
 ExecStartPost=/usr/bin/sh -c "rm ~/downloads/*.torrent"
