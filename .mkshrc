@@ -10,7 +10,7 @@ if [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ] ; then
 	else
 		print -n "\e[32m"
 	fi
-	print " $(git symbolic-ref --short HEAD) "
+	print " $(git branch | awk \'/* / {sub(")","",$NF); print $NF}\') "
 fi)$(
 (( USER_ID )) && print "\e[32m$" || print "\e[31m#") \e[m'
 
