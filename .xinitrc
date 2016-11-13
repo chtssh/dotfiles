@@ -1,2 +1,2 @@
-#!/bin/sh
-dwmstatus & dwm
+dwmstatus &
+exec dwm
