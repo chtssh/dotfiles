@@ -27,7 +27,7 @@ static Bool enablescrollbars      = TRUE;
 static Bool enablespatialbrowsing = TRUE;
 static Bool enablediskcache       = TRUE;
 static int diskcachebytes         = 5 * 1024 * 1024;
-static Bool enableplugins         = TRUE;
+static Bool enableplugins         = FALSE;
 static Bool enablescripts         = TRUE;
 static Bool enableinspector       = TRUE;
 static Bool enablestyle           = TRUE;
@@ -48,7 +48,7 @@ static Bool allowgeolocation      = TRUE;
 /* DOWNLOAD(URI, referer) */
 #define DOWNLOAD(d, r) { \
 	.v = (char *[]){ "/bin/sh", "-c", \
-	     "st -e /bin/sh -c \"cd ~/downloads;" \
+	     "st -c curl -g 80x10 -e /bin/sh -c \"cd ~/downloads;" \
 	     "curl -L -J -O --user-agent '$1'" \
 	     " --referer '$2' -b $3 -c $3 '$0';" \
 	     " sleep 5;\"", \
