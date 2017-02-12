@@ -1,5 +1,3 @@
-let g:unite_ignore_source_files = ['function.vim', 'command.vim', 'window.vim']
-" For unite-menu.
 let g:unite_source_menu_menus = {}
 let g:unite_source_menu_menus.unite = {
       \     'description' : 'Start unite sources',
@@ -15,18 +13,27 @@ let g:unite_source_menu_menus.unite.command_candidates = {
       \       'scriptnames': 'Unite output:scriptnames',
       \     }
 
-let g:unite_source_menu_menus.zsh = {
-      \     'description' : 'Edit zsh files',
+let g:unite_source_menu_menus.configs = {
+      \     'description' : 'Edit config files',
       \ }
-let g:unite_source_menu_menus.zsh.file_candidates = [
-      \       ['zshenv'    , '~/.zshenv'],
-      \       ['zshrc'     , '~/.zshrc'],
-      \       ['zplug'     , '~/.zplug'],
+let g:unite_source_menu_menus.configs.file_candidates = [
+      \       ['mksh'     , '~/.mkshrc'],
+      \       ['ncmpcpp'  , '~/.config/ncmpcpp/config'],
+      \       ['xinit'    , '~/.xinitrc'],
+      \       ['profile'  , '~/.profile'],
+      \       ['rtorrent' , '~/.rtorrent.rc'],
+      \       ['zathura' , '~/.config/zathura/zathurarc'],
+      \       ['ranger' , '~/.config/ranger/rc.conf'],
+      \       ['mpd' , '~/.config/mpd/mpd.conf'],
+      \       ['mpv' , '~/.config/mpv/mpv.conf'],
+      \       ['nvim' , '~/.config/nvim/init.vim'],
       \     ]
-let g:unite_source_alias_aliases = {}
-let g:unite_source_alias_aliases.test = {
-      \ 'source' : 'file_rec',
-      \ 'args'   : '~/',
-      \ }
-call unite#custom#profile('files', 'filters', 'sorter_rank')
 
+let g:unite_source_menu_menus.logs = {
+      \       'description' : 'View config files',
+      \ }
+let g:unite_source_menu_menus.logs.file_candidates = [
+      \       ['xorg'     , '/var/log/Xorg.0.log'],
+      \       ['dwm'      , '~/.dwm.log'],
+      \       ['pacman'   , '/var/log/pacman.log'],
+      \     ]

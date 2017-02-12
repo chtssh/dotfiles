@@ -2,46 +2,9 @@
 execute 'source' expand('~/.config/nvim/plugins/dein.vim')
 
 " Mappings: {{{
-function! s:GetBufferList() abort
-  redir =>buflist
-  silent! ls
-  redir END
-  return split(buflist, '\n')
-endfunction
-
-function! ToggleLocationList() abort
-  for bufname in s:GetBufferList()
-    if bufname =~ '\[Location List\]'
-      lclose
-      return
-    endif
-  endfor
-  try
-    lopen
-  catch /E776/
-    echo 'Location List is Empty.'
-    return
-  endtry
-endfunction
-
-function! ToggleQuickfixList() abort
-  for bufname in s:GetBufferList()
-    if bufname =~ '\[Quickfix List\]'
-      cclose
-      return
-    endif
-  endfor
-  copen
-endfunction
-
-nnoremap <silent> <Leader>l :call ToggleLocationList()<CR>
-nnoremap <silent> <Leader>q :call ToggleQuickfixList()<CR>
 nnoremap Q q
-nnoremap <Leader>h :e %<.h<CR>
-nnoremap <Leader>c :e %<.cpp<CR>
-
-xnoremap <Tab> >
-xnoremap <S-Tab> <
+map <Leader>h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+nnoremap <Leader>v :Lexplore<CR>
 
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
@@ -57,46 +20,45 @@ cnoremap <C-f> <Right>
 set foldnestmax=2               " Deepest fold
 set foldminlines=10
 " set foldlevel=1
-autocmd FileType vim,toml setlocal foldtext=substitute(getline(v:foldstart),'{','','g')
-autocmd FileType c,cpp,h setlocal foldtext=substitute(getline(v:foldstart),'/','\ ','g').'\ '
-autocmd FileType c,cpp,h setlocal foldmethod=indent
+autocmd FileType vim,toml
+      \ setlocal foldtext=substitute(getline(v:foldstart),'{','','g') |
+      \ setlocal foldmethod=marker
+autocmd FileType c,cpp,h
+      \ setlocal foldtext=substitute(getline(v:foldstart),'/','\ ','g').'\ ' |
+      \ setlocal foldmethod=indent
 "}}}
 
 " View: {{{
 syntax enable
-" set showcmd                     " Show the number of selected lines/characters
 set title                       " Enable window title
-" set ruler                       " Show position
+set laststatus=1
+set ruler                       " Show position
 " set rulerformat=
 let c_no_curly_error = 1        " Disable the curly braces highlight error
 
 set list                        " Show
-set listchars=tab:▸\ ,trail:·   " tabs and trails
+"set listchars=tab:>\ ,trail:·   " tabs and trails
+set listchars=tab:│\ ,trail:•,
 
-set number                      " Print the line number
+" set number                      " Print the line number
 set relativenumber              " Print the line number relative
 " set pumheight=20                " Set popup menu max height.
 set wildignore+=*.o,*.so        " Ignore this when used wildmenu
+set scrolloff=1
+" set cursorline
+" set colorcolumn=79
 
-" set laststatus=1                " Enable/disable status bar
-" set cursorline                  " Highlight the screen line of the cursor
-" set statusline=
-" set statusline+=\ %#ErrorMsg#%{neomake#statusline#LoclistStatus('neomake:\ ')}
+autocmd FileType qf wincmd J
+autocmd FileType qf,netrw setlocal statusline=%f
 
-set statusline=%f\ %h%m%r%<
-set statusline+=%10(%{neomake#statusline#LoclistStatus()}%)
+let g:netrw_winsize = -28
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_sort_sequence = '[\/]$,*'
+let g:netrw_browse_split = 4
+let g:netrw_list_hide = netrw_gitignore#Hide()
 
-set statusline+=%=              " Align to right
-set statusline+=%-15(%y%)
-set statusline+=%-10.(%l:%c%V%)\ %P
-" set diffopt+=vertical
-
-" autocmd FileType help wincmd L  " Split left help window
-autocmd FileType qf wincmd J | setlocal statusline=%f
-" set splitbelow                  " Swap
-" set splitright                  " split
-
-let $NVIM_TUI_ENABLE_TRUE_COLOR   = 1
+"set termguicolors
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 " set fillchars=stl:^,stlnc:-,vert:\|,fold:-,diff:-
@@ -115,13 +77,14 @@ set secure                      " Disable unsafe commands
 autocmd FileType c,cpp,h setlocal cindent
 set cinoptions=:0l1g0N-s        " Indents for C/C++
 
-set ts=4 sts=4 sw=4             " Tab
-set expandtab                   " Space
-set smartindent                 " Settings
-autocmd FileType cpp,hpp,vim setlocal ts=2 sts=2 sw=2 et
+" set ts=4 sts=4 sw=4             " Tab
+" set expandtab                   " Space
+" set smartindent                 " Settings
+" autocmd FileType cpp,hpp,vim setlocal ts=2 sts=2 sw=2
+" autocmd FileType c setlocal noexpandtab
 
 set formatoptions-=ro
 
+"set makeprg=make\ -C\ build\ -s
+"set errorformat=%f:%l:%c:\ %m
 "}}}
-
-" vim: set ts=2 sw=2 sts=2 et fdm=marker:
