@@ -1,0 +1,6 @@
+[submodule ".vim/pack/bundle/start/gotham"]
+	path = .vim/pack/bundle/start/gotham
+	url = https://github.com/whatyouhide/vim-gotham.git
+[submodule ".vim/pack/bundle/start/completor"]
+	path = .vim/pack/bundle/start/completor
+	url = https://github.com/maralla/completor.vim.git
