@@ -48,6 +48,19 @@ if has('path_extra')
 	set path+=**
 endif
 
+fun! s:LoadTemplate()
+	let template = $HOME . '/.vim/templates/foo.' . expand('%:e')
+
+	if filereadable(template)
+		execute '0r' . template . '|$d'
+		%s/`.*`/\=eval(strcharpart(submatch(0), 1,
+			\strlen(submatch(0)) - 2))/g
+		%s/${0}//g
+	endif
+endfun
+autocmd BufNewFile *.* silent! call s:LoadTemplate()
+
+
 if has('folding')
 	autocmd FileType c setlocal foldmethod=syntax
 	set foldminlines=20
