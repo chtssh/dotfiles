@@ -4,10 +4,18 @@ set history=200
 set scrolloff=5
 set suffixes+=.log,.out,.png,.jpg
 
+" Mappings:
+nnoremap <Leader>v :Lexplore<CR>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+
+let g:netrw_winsize = -28
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_list_hide= netrw_gitignore#Hide().'.*\.swp$'
+autocmd FileType netrw setlocal statusline=%f
 
 let g:completor_auto_trigger = 0
 set pumheight=10
@@ -15,7 +23,8 @@ set pumheight=10
 if has('syntax')
 	syntax enable
 	colorscheme gotham
-	let c_comment_strings=1
+	let c_comment_strings = 1
+	let c_curly_error = 1
 	set colorcolumn=+1,+2
 endif
 
@@ -25,8 +34,8 @@ if has('cindent')
 	set cinoptions=:0t0(0
 endif
 
-set noswapfile
 if has('persistent_undo')
+	set noswapfile
 	set undofile
 	set undodir=~/.vim/.undo
 endif
@@ -45,7 +54,7 @@ if has('folding')
 endif
 
 set list
-set listchars=tab:│\ ,trail:•
+set listchars=tab:\|\ ,trail:-
 
 if has('windows') && has('folding')
 	set fillchars=vert:\│,fold:-
@@ -70,7 +79,7 @@ if has('langmap')
 endif
 
 set ttyfast
-
+set laststatus=1
 set relativenumber
 
 " Completion:
