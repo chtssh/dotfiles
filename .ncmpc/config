@@ -1,0 +1,27 @@
+screen-list = playlist,artist
+welcome-screen-list = no
+set-xterm-title = yes
+hide-cursor = 2
+
+# colors
+enable-colors = yes
+color title = blue
+color title-bold = blue
+
+color line = blue
+color line-flags = red
+
+color list = white
+color list-bold = white,bold
+
+color browser-directory = white,bold
+color browser-playlist = white
+
+color progressbar = green
+
+color status-state = blue
+color status-song = white,bold
+color status-time = green
+
+color alert = red,bold
+# vim: ft=config

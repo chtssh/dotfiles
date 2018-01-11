@@ -1,2 +1,2 @@
 export PATH="$PATH:$HOME/.bin"
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx -- -noacpi
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec xinit -- -noacpi
